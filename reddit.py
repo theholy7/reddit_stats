@@ -1,10 +1,12 @@
-import requests, time
-import pprint
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-def get_all(max_depth=5,after=None):
+import requests, time, pprint
+
+def get_all(user, max_depth=5,after=None):
     """recursive function to keep fetching pages (reddit limits to batches of 100)"""
     
-    url = "http://www.reddit.com/user/zemike/comments.json?limit=100"
+    url = "http://www.reddit.com/user/"+user+"/comments.json?limit=100"
     if after:
         url += "&after="+after
         
@@ -14,12 +16,13 @@ def get_all(max_depth=5,after=None):
     
     if j['data']['after'] and max_depth > 0:
         time.sleep(2)
-        return j['data']['children'] + get_all(max_depth-1, j['data']['after'])
+        return j['data']['children'] + get_all(user, max_depth-1, j['data']['after'])
     else:
         return j['data']['children'] 
 
-data = get_all(15) # go get a quick coffee now
+user = str(raw_input('User='))
+x = int(raw_input('comments x100='))
+
+data = get_all(user, x) # go get a quick coffee now
 print len(data)
 pprint.pprint(data[0])
-
-#comment
