@@ -20,9 +20,21 @@ def get_all(user, max_depth=5,after=None):
     else:
         return j['data']['children'] 
 
-user = str(raw_input('User='))
-x = int(raw_input('comments x100='))
+def user_exist(user):
+    url = "http://www.reddit.com/user/"+user+"/about.json"
+    
+    r = requests.get(url)
+    result = r.json()
+    
+    return result
 
-data = get_all(user, x) # go get a quick coffee now
-print len(data)
-pprint.pprint(data[0])
+def main():
+    user = str(raw_input('User='))
+    x = int(raw_input('comments x100='))
+    
+    data = user_exist(user)
+    #data = get_all(user, x) # go get a quick coffee now
+    print len(data)
+    pprint.pprint(data)
+
+main()
