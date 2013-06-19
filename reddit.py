@@ -41,8 +41,17 @@ def user_exist(user):
         return False
     except KeyError:
         return True
+        
+def divisao_comments(data):
+    import collections
     
-
+    contador = collections.Counter()
+    
+    for element in data:
+        contador[element['data']['subreddit']] +=1
+    
+    print contador.keys()    
+    
 def main():
     if internet_on() == False:
         print "Nao tens net"
@@ -52,7 +61,8 @@ def main():
     user_exist(user)
     
     x = int(raw_input('comments 100 + n100. n= '))
-    #data = get_all(user, x) # go get a quick coffee now
+    data = get_all(user, x) # go get a quick coffee now
+    divisao_comments(data)
     #print len(data)
     #pprint.pprint(data)
 
