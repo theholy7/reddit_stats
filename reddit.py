@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import requests, time, pprint, urllib2
+import requests, time
+import pprint, urllib2
+import sys
 
 def internet_on():
     try:
@@ -42,15 +44,14 @@ def user_exist(user):
     
 
 def main():
-    user = str(raw_input('User='))
-    x = int(raw_input('comments x100='))
-    
     if internet_on() == False:
         print "Nao tens net"
-        quit()
+        sys.exit(0)
     
+    user = str(raw_input('User='))
     user_exist(user)
     
+    x = int(raw_input('comments 100 + n100. n= '))
     #data = get_all(user, x) # go get a quick coffee now
     #print len(data)
     #pprint.pprint(data)
