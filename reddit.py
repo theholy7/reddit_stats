@@ -1,7 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import requests, time, pprint
+import requests, time, pprint, urllib2
+
+def internet_on():
+    try:
+        response = urllib2.urlopen('http://74.125.224.72/',timeout=1)
+        return True
+    except urllib2.URLError as err: 
+        pass
+    return False
 
 def get_all(user, max_depth=5,after=None):
     """recursive function to keep fetching pages (reddit limits to batches of 100)"""
@@ -25,16 +33,26 @@ def user_exist(user):
     
     r = requests.get(url)
     result = r.json()
+    pprint.pprint(result)
+    try:
+        print "Erro: " + str(result['error']) +". User não existe."
+        return False
+    except KeyError:
+        return True
     
-    return result
 
 def main():
     user = str(raw_input('User='))
     x = int(raw_input('comments x100='))
     
-    data = user_exist(user)
+    if internet_on() == False:
+        print "Nao tens net"
+        quit()
+    
+    user_exist(user)
+    
     #data = get_all(user, x) # go get a quick coffee now
-    print len(data)
-    pprint.pprint(data)
+    #print len(data)
+    #pprint.pprint(data)
 
 main()
