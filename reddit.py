@@ -60,7 +60,7 @@ def main():
     user = str(raw_input('User='))
     user_exist(user)
     
-    x = int(raw_input('comments 100 + n100. n= '))
+    x = int(raw_input('100 + n100 comments. n= '))
     data = get_all(user, x) # go get a quick coffee now
     divisao_comments(data)
     #print len(data)
